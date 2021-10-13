@@ -3,6 +3,7 @@ import Modal from "./components/Modal";
 import axios from "axios";
 
 class App extends Component {
+  url = 'https://to-do-back-end.herokuapp.com'
   constructor(props) {
     super(props);
     this.state = {
@@ -23,7 +24,7 @@ class App extends Component {
 
   refreshList = () => {
     axios
-      .get("/api/todos/")
+      .get(url+"/api/todos/")
       .then((res) => this.setState({ todoList: res.data }))
       .catch((err) => console.log(err));
   };
@@ -37,18 +38,18 @@ class App extends Component {
 
     if (item.id) {
       axios
-        .put(`/api/todos/${item.id}/`, item)
+        .put(url+`/api/todos/${item.id}/`, item)
         .then((res) => this.refreshList());
       return;
     }
     axios
-      .post("/api/todos/", item)
+      .post(url+"/api/todos/", item)
       .then((res) => this.refreshList());
   };
 
   handleDelete = (item) => {
     axios
-      .delete(`/api/todos/${item.id}/`)
+      .delete(url+`/api/todos/${item.id}/`)
       .then((res) => this.refreshList());
   };
 
